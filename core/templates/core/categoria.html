@@ -1,0 +1,29 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load humanize %}
+{% load l10n %}
+
+{% block content %}
+<div class="content d-flex align-items-center justify-content-center">
+  <div class="container">
+    <div class="row justify-content-center g-3">
+      {% for libro in libros %}
+        <div class="card mb-3" style="max-width: 540px">
+          <div class="row g-0">
+            <div class="col-md-4">
+              <img src="{{ libro.src_imagen }}" class="card-img rounded-start img-fluid" alt="">
+            </div>
+            <div class="col-md-8">
+              <div class="card-body">
+                <h5 class="card-titulo">{{ libro.titulo }}</h5>
+                <p class="card-text">{{ libro.descripcion }}</p>
+                <p class="card-text"><small class="text-body-secondary">Precio: {{ libro.precio }}</small></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+<div id="login">
+    <div  class="container">
+    <div id="login-row" class="">
+      <div id="login-column" class="">
+          <div id="login-box" class="">
+            <form id="login-form" class="form">
+              <h3 class="text-center text-info">Formulario de registro</h3>
+              <div class="form-group">
+                  <label for="user" class="control-label">Usuario</label>
+                  <input type="text" class="form-control" name="user_id" placeholder="Usuario">
+              </div>
+  
+              <div class="form-group">
+                  <label for="pass" class="control-label">Contraseña</label>
+                  <input type="text" class="form-control" name="pass" placeholder="Contraseña">
+              </div>
+  
+              <div class="form-group">
+                  <label for="nombre" class="control-label">Nombre</label>
+                  <input type="text" class="form-control" name="nombre" placeholder="Nombre y apellidos">
+              </div>
+  
+              <div class="form-group">
+                  <label for="dir" class="control-label">Dirección</label>
+                  <input type="text" class="form-control" name="dir" placeholder="Dirección completa">
+              </div>
+              <div class="form-group">
+                <label for="email" class="control-label">Email</label>
+                <input type="text" class="form-control" name="email" placeholder="Correo electrónico">
+            </div>
+              <div class="form-group">
+                <button type="submit" class="btn-primary">Registrar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+    </div>
+    </div>
+    </div>
+{% endblock %}

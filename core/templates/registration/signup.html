@@ -1,0 +1,70 @@
+{% extends 'core/base.html' %} {% block content %}
+<div class="content d-flex align-items-center justify-content-center">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-6">
+				<div class="card-body">
+					<form method="post">
+						<h3>Registro</h3>
+						{% csrf_token %} {{ form.username.errors }}
+						<div class="mb-3">
+							<label class="form-label" for="{{ form.username.id_for_label }}">Nombre de Usuario:</label>
+							{{ form.username }}
+						</div>
+
+						{{ form.email.errors }}
+						<div class="mb-3">
+							<label class="form-label" for="{{ form.email.id_for_label }}">Email:</label>
+							{{ form.email }}
+						</div>
+
+						{{ form.password1.errors }}
+						<div class="mb-3">
+							<label class="form-label" for="{{ form.password1.id_for_label }}">Contraseña:</label>
+							{{ form.password1 }}
+						</div>
+
+						{{ form.password2.errors }}
+						<div class="mb-3">
+							<label class="form-label" for="{{ form.password2.id_for_label }}">Confirmar Contraseña:</label>
+							{{ form.password2 }}
+						</div>
+
+						{{ form.first_name.errors }}
+						<div class="mb-3">
+							<label class="form-label" for="{{ form.first_name.id_for_label }}">Primer Nombre:</label>
+							{{ form.first_name }}
+						</div>
+
+						{{ form.last_name.errors }}
+						<div class="mb-3">
+							<label class="form-label" for="{{ form.last_name.id_for_label }}">Apellido:</label>
+							{{ form.last_name }}
+						</div>
+
+						{{ form.birth_date.errors }}
+						<div class="mb-3">
+							<label class="form-label" for="{{ form.birth_date.id_for_label }}">Fecha de Nacimiento:</label>
+							{{ form.birth_date }}
+						</div>
+
+						{{ form.phone_number.errors }}
+						<div class="mb-3">
+							<label class="form-label" for="{{ form.phone_number.id_for_label }}">Número de Teléfono:</label>
+							{{ form.phone_number }}
+						</div>
+
+						{{ form.address.errors }}
+						<div class="mb-3">
+							<label class="form-label" for="{{ form.address.id_for_label }}">Dirección:</label>
+							{{ form.address }}
+						</div>
+
+						<button type="submit">Registrarse</button>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'core/base.html' %} {% load static %} {% block content %}
+<div class="container">
+	{% if messages %} {% for message in messages %}
+	<div class="alert alert-{{ message.tags }}">{{ message }}</div>
+	{% endfor %} {% endif %}
+	<div class="txt_gris_medio">Listado de Libros</div>
+	<div class="row justify-content-center p-4">
+		<table border="1" class="table-padding">
+			<tr>
+				<td class="py-2"><a href="?order_by=titulo&order_dir={% if order_by == 'titulo' and order_dir != 'desc' %}desc{% else %}asc{% endif %}">Título</a></td>
+				<td>
+					<a href="?order_by=categoria__nombre&order_dir={% if order_by == 'categoria__nombre' and order_dir != 'desc' %}desc{% else %}asc{% endif %}"
+						>Categoría</a
+					>
+				</td>
+				<td><a href="?order_by=precio&order_dir={% if order_by == 'precio' and order_dir != 'desc' %}desc{% else %}asc{% endif %}">Precio</a></td>
+				<td><strong>Acciones</strong></td>
+			</tr>
+			{% for lib in libros %}
+			<tr>
+				<td>{{lib.titulo}}</td>
+				<td>{{lib.categoria}}</td>
+				<td>{{lib.precio}}</td>
+				<td class="sort-horizontally">
+					<a href="{% url 'modificar-libro' libro_id=lib.id %}" class="btn half">Modificar</a>
+					<a href="{% url 'eliminar-libro' libro_id=lib.id %}" class="btn half">Eliminar</a>
+				</td>
+			</tr>
+
+			{% endfor %}
+		</table>
+		<a href="/form-libro/" class="btn btn-primary">Agregar Libro</a>
+
+	</div>
+</div>
+{% endblock %}

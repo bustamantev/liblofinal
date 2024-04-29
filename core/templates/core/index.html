@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %} {% load static %} {% block content %}
+<div class="content d-flex align-items-center justify-content-center">
+	<div class="container">
+		<div class="row justify-content-center">
+			<div class="col-lg-2 col-md-3 col-sm-6">
+				<div class="card text-center">
+					<img src={% static "core/img/foto_historia.webp" %} class="card-img-top img-fluid" />
+					<div class="card-body">
+						<a href="/historia/" class="btn btn-dark">Historia</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-3 col-sm-6">
+				<div class="card text-center">
+					<img src={% static "core/img/fantasia.jpg" %} class="card-img-top img-fluid" />
+					<div class="card-body">
+						<a href="/fantasia/" class="btn btn-dark">Fantasia</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-3 col-sm-6">
+				<div class="card text-center">
+					<img src={% static "core/img/man.jpg" %} class="card-img-top img-fluid" />
+					<div class="card-body">
+						<a href="/manuales/" class="btn btn-dark">Manuales</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-3 col-sm-6">
+				<div class="card text-center">
+					<img src={% static "core/img/nov.jpg" %} class="card-img-top img-fluid" />
+					<div class="card-body">
+						<a href="/novelas/" class="btn btn-dark">Novelas</a>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-2 col-md-3 col-sm-6">
+				<div class="card text-center">
+					<img src={% static "core/img/sico.jpg" %} class="card-img-top img-fluid" />
+					<div class="card-body">
+						<a href="/psicologia/" class="btn btn-dark">Psicologia</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}

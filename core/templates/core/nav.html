@@ -1,0 +1,69 @@
+<nav class="navbar navbar-expand-lg navbar-dark data-bs-theme">
+	<div class="container-fluid">
+		<button
+			class="navbar-toggler"
+			type="button"
+			data-bs-toggle="collapse"
+			data-bs-target="#navbarSupportedContent"
+			aria-controls="navbarSupportedContent"
+			aria-expanded="false"
+			aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item">
+					<a class="nav-link active mx2" aria-current="page" href="/">Hola {{ username }}{{ subtitulo }}</a>
+				</li>
+				{% if not request.user.is_authenticated %}
+				<li class="nav-item">
+					<a class="nav-link" href="/accounts/signup/">Registro</a>
+				</li>
+				<a class="nav-link" href="/accounts/login/">Iniciar sesion</a>
+				{% endif %}
+				{% if perms.core.change_customuser %}
+				<li class="nav-item">
+					<a class="nav-link" href="/modificar-usuario/{{ request.user.id }}/"> Perfil </a>
+				</li>
+				{% endif %}
+				{% if perms.core.view_libro %}
+				<li class="nav-item">
+					<a class="nav-link" href="/lista/libros/">Lista de libros disponibles</a>
+				</li>
+				{% endif %}
+				
+				{% if perms.core.view_usuario %}
+				<li class="nav-item">
+					<a class="nav-link" href="/lista/usuarios/">Lista de usuarios almacenados</a>
+				</li>
+				{% endif %} 
+				{% if request.user.is_authenticated %}
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"> Categorías </a>
+					<ul class="dropdown-menu">
+						<li>
+							<a class="dropdown-item" href="/historia/">Historia</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="/fantasia/">Fantasia</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="/manuales/">Manuales</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="/novelas/">Novelas</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="/psicologia/">Psicologia</a>
+						</li>
+					</ul>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="/api/catalogo-libros/">Catálogo de libros por encargo</a>
+				</li>
+				<a class="nav-link" href="/accounts/logout/">Cerrar sesion</a>
+				{% endif %}
+			</ul>
+		</div>
+	</div>
+</nav>
