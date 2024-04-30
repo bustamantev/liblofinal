@@ -1,6 +1,10 @@
-{% extends 'core/base.html' %} 
-{% load static %}
+{% extends 'core/base.html' %}
 {% block content %}
+<style>
+	.form-group {
+		margin-bottom: 20px !important;
+	}
+</style>
 <div class="content d-flex align-items-center justify-content-center">
     <div class="container">
         <div class="row justify-content-center">
@@ -9,42 +13,47 @@
                     <form method="post">
                         <h3>Crear Libro</h3>
                         {% csrf_token %}
-                        <div class="mb-3">
+                        {% if form.errors %}
+                        <div class="alert alert-danger">
+                            <p>Hubo un error en el formulario. Por favor, inténtalo de nuevo.</p>
+                        </div>
+                        {% endif %}
+                        <div class="mb-3 form-group">
                             <label class="form-label" for="{{ form.categoria.id_for_label }}">Categoría:</label>
                             {{ form.categoria }}
                             {% for error in form.categoria.errors %}
                             <p class="text-danger">{{ error }}</p>
                             {% endfor %}
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 form-group">
                             <label class="form-label" for="{{ form.titulo.id_for_label }}">Título:</label>
                             {{ form.titulo }}
                             {% for error in form.titulo.errors %}
                             <p class="text-danger">{{ error }}</p>
                             {% endfor %}
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 form-group">
                             <label class="form-label" for="{{ form.descripcion.id_for_label }}">Descripción:</label>
-                            {{ form.descripcion }}
+                            <textarea class="form-control" id="{{ form.descripcion.id_for_label }}" name="{{ form.descripcion.name }}" rows="6">{{ form.descripcion.value }}</textarea>
                             {% for error in form.descripcion.errors %}
                             <p class="text-danger">{{ error }}</p>
                             {% endfor %}
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 form-group">
                             <label class="form-label" for="{{ form.precio.id_for_label }}">Precio:</label>
                             {{ form.precio }}
                             {% for error in form.precio.errors %}
                             <p class="text-danger">{{ error }}</p>
                             {% endfor %}
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 form-group">
                             <label class="form-label" for="{{ form.src_imagen.id_for_label }}">URL de la imagen:</label>
                             {{ form.src_imagen }}
                             {% for error in form.src_imagen.errors %}
                             <p class="text-danger">{{ error }}</p>
                             {% endfor %}
                         </div>
-                        <button type="submit">Guardar</button>
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </form>
                 </div>
             </div>
