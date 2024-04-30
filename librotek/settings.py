@@ -87,8 +87,8 @@ DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.oracle',
 #         'NAME': '127.0.0.1:1521/orcl',
-#         'USER': 'usuariosumativa',
-#         'PASSWORD': 'sumativa2',
+#         'USER': 'sumativauser',
+#         'PASSWORD': 'sumativa3',
 #         'TEST': {
 #             'USER': 'default_test',
 #             'TBLSPACE': 'default_test_tbls',
