@@ -41,10 +41,17 @@ def catalogo_libros(request):
     libros = []
     for libro in data['results']:
         # Extraer los campos necesarios del libro
-        titulo = libro['title']
-        autor = libro.get('authors', [{'name': 'Desconocido'}])[0]['name']
-        imagen_url = libro['formats'].get('image/jpeg', None)
-        libro_id = libro['id']  # Asegúrate de obtener el ID del libro
+        titulo = libro.get('title', 'Título Desconocido')
+        
+        autor = libro.get('authors', [{'name': 'Desconocido'}])
+        if autor:
+            autor = autor[0]['name']
+        else:
+            autor = 'Desconocido'
+        
+        imagen_url = libro.get('formats', {}).get('image/jpeg', None)
+        
+        libro_id = libro.get('id', 'ID Desconocido')
         
         # Agregar el diccionario del libro a la lista de libros, incluyendo el ID
         libros.append({
@@ -55,11 +62,10 @@ def catalogo_libros(request):
         })
 
     next_page_url = data.get('next', None)
-    
-    # Verificar si hay una URL de página anterior disponible
     previous_page_url = data.get('previous', None)
     
     return render(request, 'core/catalogo_libros.html', {'libros': libros, 'next_page_url': next_page_url, 'previous_page_url': previous_page_url})
+
 
 
 
@@ -85,11 +91,6 @@ def detalle_libro(request, libro_id):
     }
 
     return render(request, 'core/detalle_libro.html', context)
-
-
-
-
-
 
 
 
