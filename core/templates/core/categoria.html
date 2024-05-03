@@ -11,7 +11,11 @@
         <div class="card mb-3" style="max-width: 540px">
           <div class="row g-0">
             <div class="col-md-4">
-              <img src="{{ libro.src_imagen }}" class="card-img rounded-start img-fluid" alt="">
+              {% if libro.imagen %}
+                <img src="{{ libro.imagen }}" class="card-img rounded-start img-fluid" alt="{{ libro.titulo }}">
+              {% else %}
+                <img src="{% static 'ruta/a/imagen/por/defecto.jpg' %}" class="card-img rounded-start img-fluid" alt="{{ libro.titulo }}">
+              {% endif %}
             </div>
             <div class="col-md-8">
               <div class="card-body">
@@ -22,6 +26,8 @@
             </div>
           </div>
         </div>
+      {% empty %}
+        <p>No se encontraron libros en esta categoría.</p>
       {% endfor %}
     </div>
   </div>

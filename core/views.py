@@ -1,3 +1,4 @@
+import json
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required, permission_required
@@ -6,7 +7,6 @@ from .forms import SignupForm, LibroForm, LibroModificacionForm, CustomUserForm,
 from .models import CategoriaLibro, Libro, CustomUser
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
-
 
 NOMBRE_DEL_SITIO = 'Librotek'
 # @login_required
@@ -23,34 +23,35 @@ def index(request):
     return render(request, 'core/index.html',
         {
             'titulo': titulo(),
-            'subtitulo': ', bienvenido a Librotek',
+            'subtitulo': ', Bienvenido a Librotek!',
             'username': username
         }
     )
 
+def filtrar_libros(categoria):
+    with open('core/libros.json', encoding='utf-8') as file:
+        libros = json.load(file)
+    libros_filtrados = [libro for libro in libros if libro['categoria'] == categoria]
+    return libros_filtrados
+
 def historia(request):
-    categoria_historia = CategoriaLibro.objects.get(nombre='Historia')
-    libros = Libro.objects.filter(categoria=categoria_historia)
+    libros = filtrar_libros('Historia')
     return render(request, 'core/categoria.html', {'libros': libros})
 
 def fantasia(request):
-    categoria_fantasia = CategoriaLibro.objects.get(nombre='Fantasía')
-    libros = Libro.objects.filter(categoria=categoria_fantasia)
+    libros = filtrar_libros('Fantasía')
     return render(request, 'core/categoria.html', {'libros': libros})
 
 def psicologia(request):
-    categoria_psicologia = CategoriaLibro.objects.get(nombre='Psicología')
-    libros = Libro.objects.filter(categoria=categoria_psicologia)
+    libros = filtrar_libros('Psicología')
     return render(request, 'core/categoria.html', {'libros': libros})
 
 def manuales(request):
-    categoria_manuales = CategoriaLibro.objects.get(nombre='Manuales')
-    libros = Libro.objects.filter(categoria=categoria_manuales)
+    libros = filtrar_libros('Manuales')
     return render(request, 'core/categoria.html', {'libros': libros})
 
 def novelas(request):
-    categoria_novelas = CategoriaLibro.objects.get(nombre='Novelas')
-    libros = Libro.objects.filter(categoria=categoria_novelas)
+    libros = filtrar_libros('Novelas')
     return render(request, 'core/categoria.html', {'libros': libros})
 
 def signup(request):
@@ -100,11 +101,10 @@ def modificar_usuario(request, usuario_id):
     if request.method == 'POST':
         form = CustomUserModificacionForm(request.POST, instance=usuario)
         if form.is_valid():
-            # Guardar los campos modificados del formulario
             usuario = form.save(commit=False)
-            nueva_contraseña = form.cleaned_data.get('password')  # Obtener la nueva contraseña del formulario
+            nueva_contraseña = form.cleaned_data.get('password')
             if nueva_contraseña:
-                usuario.set_password(nueva_contraseña)  # Si se proporciona una nueva contraseña, actualizarla
+                usuario.set_password(nueva_contraseña)
             usuario.save()
             username_usuario = usuario.username
             messages.success(request, f'Usuario "{username_usuario}" modificado correctamente.')
@@ -127,16 +127,12 @@ def eliminar_usuario(request, usuario_id):
 
 @permission_required('core.view_libro')
 def lista_libros(request):
-    # Obtener el parámetro de orden y establecer el orden predeterminado
     order_by = request.GET.get('order_by', 'categoria__nombre')
-    # Obtener el parámetro de dirección de orden y establecer el orden predeterminado
     order_dir = request.GET.get('order_dir', 'asc')
 
-    # Cambiar el orden a descendente si se especifica
     if order_dir == 'desc':
         order_by = '-' + order_by
 
-    # Obtener la lista de libros ordenada
     libros = Libro.objects.order_by(order_by)
 
     context = {
@@ -152,7 +148,7 @@ def crear_libro(request):
         form = LibroForm(request.POST)
         if form.is_valid():
             libro = form.save()
-            titulo_libro = libro.titulo  # Obtener el título del libro recién creado
+            titulo_libro = libro.titulo
             messages.success(request, f'Libro "{titulo_libro}" creado correctamente.')
             return redirect('/lista/libros/')
     else:
@@ -161,20 +157,17 @@ def crear_libro(request):
 
 @permission_required('core.change_libro')
 def modificar_libro(request, libro_id):
-    # Obtener el libro específico
     libro = get_object_or_404(Libro, pk=libro_id)
     
     if request.method == 'POST':
-        # Si se envió el formulario, procesar los datos
         form = LibroModificacionForm(request.POST, instance=libro)
         if form.is_valid():
-            libro_modificado = form.save(commit=False)  # Guardar el libro modificado sin hacer commit todavía
+            libro_modificado = form.save(commit=False)
             libro_modificado.save()
-            titulo_libro = libro_modificado.titulo  # Obtener el título del libro modificado
+            titulo_libro = libro_modificado.titulo
             messages.success(request, f'Libro "{titulo_libro}" modificado correctamente.')
             return redirect('/lista/libros/')
     else:
-        # Si es una solicitud GET, mostrar el formulario pre-rellenado con los datos del libro
         form = LibroModificacionForm(instance=libro)
     
     return render(request, 'core/form_mod_libro.html', {'form': form})
@@ -183,7 +176,7 @@ def modificar_libro(request, libro_id):
 def eliminar_libro(request, libro_id):
     try:
         libro = get_object_or_404(Libro, id=libro_id)
-        titulo_libro = libro.titulo  # Obtener el título del libro antes de eliminarlo
+        titulo_libro = libro.titulo
         libro.delete()
         messages.success(request, f'Libro "{titulo_libro}" eliminado correctamente.')
     except:

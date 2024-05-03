@@ -3,16 +3,16 @@
 
 {% block content %}
 <div class="container">
-    <h1 class="mt-4 mb-4">{{ titulo }}</h1>
+    <h1 class="mt-4 mb-4">{{ libro.titulo }}</h1>
     <div class="row">
         <div class="col-md-8">
-            <p><strong>Idiomas:</strong> {{ idiomas|join:", " }}</p>
-            <p><strong>Autor:</strong> {{ autor }}</p>
-            <p><strong>Estanterías:</strong> {{ estanterias|join:", " }}</p>
+            <p><strong>Idiomas:</strong> {{ libro.idiomas|join:", " }}</p>
+            <p><strong>Autor:</strong> {{ libro.autor }}</p>
+            <p><strong>Estanterías:</strong> {{ libro.estanterias|join:", " }}</p>
         </div>
         <div class="col-md-4 text-center">
-            {% if imagen_url %}
-            <img src="{{ imagen_url }}" alt="Portada del libro" class="img-fluid" style="max-height: 200px" />
+            {% if libro.imagen %}
+            <img src="{{ libro.imagen }}" alt="Portada del libro" class="img-fluid" style="max-height: 200px" />
             {% else %}
             <p>Imagen no disponible</p>
             {% endif %}
